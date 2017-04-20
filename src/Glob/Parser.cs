@@ -97,7 +97,8 @@ namespace Glob
             return CharacterWildcard.Default;
         }
 
-        private GlobNode ParseSubSegment()
+        // SubSegment := Identifier | CharacterSet | LiteralSet | CharacterWildcard | Wildcard
+        private SubSegment ParseSubSegment()
         {
             switch (this._currentToken.Kind)
             {
@@ -112,11 +113,12 @@ namespace Glob
                 case TokenKind.Wildcard:
                     return this.ParseWildcard();
                 default:
-                    throw new Exception("Unable to parse PathSubSegment");
+                    throw new Exception("Unable to parse SubSegment");
             }
         }
 
-        private PathSegment ParseSegment()
+        // Segment := DirectoryWildcard | DirectorySegment
+        private Segment ParseSegment()
         {
             if (this._currentToken.Kind == TokenKind.DirectoryWildcard)
             {
@@ -124,12 +126,17 @@ namespace Glob
                 return DirectoryWildcard.Default;
             }
 
-            return ParsePathSegment();
+            return ParseDirectorySegment();
         }
 
-        private PathSegment ParsePathSegment()
+        // DirectorySegment := SubSegment SubSegment*
+        private Segment ParseDirectorySegment()
         {
-            var items = new List<GlobNode>();
+            var items = new List<SubSegment>
+            {
+                this.ParseSubSegment()
+            };
+
             while (true)
             {
                 switch (this._currentToken.Kind)
@@ -147,7 +154,7 @@ namespace Glob
                 break;
             }
 
-            return new PathSegment(items);
+            return new DirectorySegment(items);
         }
 
         private Root ParseRoot()
@@ -166,9 +173,9 @@ namespace Glob
         }
 
         // Tree := ( Root | Segment ) ( '/' Segment )*
-        private GlobNode ParseTree()
+        protected internal Tree ParseTree()
         {
-            var items = new List<PathSegment>();
+            var items = new List<Segment>();
 
             if (this._currentToken.Kind == TokenKind.PathSeperator || this._currentToken.Kind == TokenKind.WindowsRoot)
             {
@@ -196,7 +203,7 @@ namespace Glob
             if(this._scanner == null)
                 throw new InvalidOperationException("Scanner was not initialized. Ensure you are passing a pattern to Parse.");
 
-            GlobNode path;
+            Tree path;
 
             switch (this._currentToken.Kind)
             {

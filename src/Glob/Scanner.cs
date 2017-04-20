@@ -86,7 +86,7 @@ namespace Glob
 
             if (char.IsLetter(current))
             {
-                if (this.PeekChar() == ':')
+                if (_sourceIndex == 0 && this.PeekChar() == ':')
                 {
                     TakeIt(); // letter
                     TakeIt(); // :

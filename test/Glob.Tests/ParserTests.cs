@@ -21,9 +21,10 @@ namespace Glob.Tests
             var tree = Assert.IsType<Tree>(glob);
             Assert.Collection(tree.Segments, segment =>
             {
-                Assert.Equal(GlobNodeType.PathSegment, segment.Type);
+                Assert.Equal(GlobNodeType.DirectorySegment, segment.Type);
+                var directory = Assert.IsType<DirectorySegment>(segment);
 
-                Assert.Collection(segment.SubSegments, node =>
+                Assert.Collection(directory.SubSegments, node =>
                 {
                     Assert.Equal(GlobNodeType.StringWildcard, node.Type);
                     Assert.IsType<StringWildcard>(node);

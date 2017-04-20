@@ -7,11 +7,18 @@ namespace Glob.Benchmarks
         private static readonly string Pattern = "p?th/*a[bcd]b[e-g]a[1-4][!wxyz][!a-c][!1-3].*";
         private Glob _compiled;
         private Glob _uncompiled;
+        private Lst<Segment> _segments;
+        private Lst<string> _pathSegments;
 
         public Benchmarks()
         {
             this._compiled = new Glob(Pattern, GlobOptions.Compiled);
             this._uncompiled = new Glob(Pattern);
+
+
+            this._segments = new Parser(Pattern).ParseTree().Segments.ToLst();
+
+            this._pathSegments = "pAth/fooooacbfa2vd4.txt".Split(new[] { System.IO.Path.DirectorySeparatorChar }).ToLst();
         }
 
         [Benchmark]
@@ -27,16 +34,22 @@ namespace Glob.Benchmarks
             return new Glob(Pattern, GlobOptions.Compiled);
         }
 
-        [Benchmark]
-        public void TestMatchForCompiledGlob()
+        [Benchmark(Baseline = true)]
+        public bool TestMatchForUncompiledGlob()
         {
-            var result = _compiled.IsMatch("pAth/fooooacbfa2vd4.txt");
+            return new Glob(Pattern).IsMatch("pAth/fooooacbfa2vd4.txt");
         }
 
         [Benchmark]
-        public void TestMatchForUncompiledGlob()
+        public object BenchmarkParseToLst()
         {
-            var result = _uncompiled.IsMatch("pAth/fooooacbfa2vd4.txt");
+            return new Parser(Pattern).ParseTree().Segments.ToLst();
+        }
+
+        [Benchmark]
+        public object BenchmarkParseToTree()
+        {
+            return new Parser(Pattern).ParseTree();
         }
     }
 }
