@@ -159,7 +159,7 @@ namespace Glob
 
         private Root ParseRoot()
         {
-            if (this._currentToken.Kind == TokenKind.PathSeperator)
+            if (this._currentToken.Kind == TokenKind.PathSeparator)
                 return new Root(); //dont eat it so we can leave it for the segments
             
             if (this._currentToken.Kind == TokenKind.WindowsRoot)
@@ -177,7 +177,7 @@ namespace Glob
         {
             var items = new List<Segment>();
 
-            if (this._currentToken.Kind == TokenKind.PathSeperator || this._currentToken.Kind == TokenKind.WindowsRoot)
+            if (this._currentToken.Kind == TokenKind.PathSeparator || this._currentToken.Kind == TokenKind.WindowsRoot)
             {
                 items.Add(this.ParseRoot());
             }
@@ -186,7 +186,7 @@ namespace Glob
                 items.Add(this.ParseSegment());
             }
 
-            while (this._currentToken.Kind == TokenKind.PathSeperator)
+            while (this._currentToken.Kind == TokenKind.PathSeparator)
             {
                 this.AcceptIt();
                 items.Add(this.ParseSegment());
@@ -208,7 +208,7 @@ namespace Glob
             switch (this._currentToken.Kind)
             {
                 case TokenKind.WindowsRoot:
-                case TokenKind.PathSeperator:
+                case TokenKind.PathSeparator:
                 case TokenKind.Identifier:
                 case TokenKind.CharacterSetStart:
                 case TokenKind.LiteralSetStart:

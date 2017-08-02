@@ -143,7 +143,7 @@ namespace Glob
                 case '/':
                 case '\\':
                     this.TakeIt();
-                    return TokenKind.PathSeperator;
+                    return TokenKind.PathSeparator;
 
                 default:
                     throw new Exception("Unable to scan for next token. Stuck on '" + (char)this._currentCharacter + "'");
