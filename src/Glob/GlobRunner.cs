@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Glob
+﻿namespace Glob
 {
     //class GlobRunner
     //{
@@ -11,7 +6,7 @@ namespace Glob
     //    private int _position;
     //    public bool Scan(GlobNode node, string input)
     //    {
-            
+
     //        if (node.Type != GlobNodeType.Tree)
     //            throw new InvalidOperationException();
 
@@ -37,7 +32,7 @@ namespace Glob
 
     //    private void ProcessRoot(GlobNode root)
     //    {
-            
+
     //    }
     //}
 }

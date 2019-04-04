@@ -4,7 +4,7 @@
     <AssemblyTitle>A C# Glob pattern matcher for .NET</AssemblyTitle>
     <VersionPrefix>0.3.4</VersionPrefix>
     <Authors>Kevin Thompson &lt;kevin.thompson@theautomaters.com&gt;</Authors>
-    <TargetFrameworks>netstandard1.3;net40;net45;net46</TargetFrameworks>
+    <TargetFrameworks>netstandard1.3</TargetFrameworks>
     <DebugType>portable</DebugType>
     <AssemblyName>Glob</AssemblyName>
     <PackageId>Glob</PackageId>
@@ -29,21 +29,6 @@
     <PackageReference Include="System.Collections" Version="4.3.0" />
     <PackageReference Include="System.Text.RegularExpressions" Version="4.3.0" />
     <PackageReference Include="System.IO.FileSystem" Version="4.3.0" />
-  </ItemGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net40' ">
-    <Reference Include="System" />
-    <Reference Include="Microsoft.CSharp" />
-  </ItemGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
-    <Reference Include="System" />
-    <Reference Include="Microsoft.CSharp" />
-  </ItemGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net46' ">
-    <Reference Include="System" />
-    <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
 
 </Project>
